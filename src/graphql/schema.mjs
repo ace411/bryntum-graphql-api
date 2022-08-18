@@ -6,6 +6,7 @@ import { gql } from 'apollo-server'
 const typeDefs = gql`
   type Task {
     startDate: String
+    durationUnit: String
     percentDone: Int
     duration: Int
     name: String

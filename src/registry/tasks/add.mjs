@@ -23,6 +23,7 @@ const addTask = async ({ name, duration }) => {
         name,
         duration,
         percentDone: 0,
+        durationUnit: 'hour',
         ...(id === 1 ? { startDate: new Date().toISOString() } : {}),
       },
     ],

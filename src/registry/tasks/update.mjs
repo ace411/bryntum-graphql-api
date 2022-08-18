@@ -9,7 +9,7 @@ import writeRegistry from '../write.mjs'
  * @param object todo
  * @returns status
  */
-const updateTask = async (id, { name, duration, percentDone }) => {
+const updateTask = async (id, { name, duration, percentDone = 0 }) => {
   let record = {}
   const records = (await readRegistry()).reduce((acc, entry) => {
     if (entry.id !== id) {
@@ -20,10 +20,21 @@ const updateTask = async (id, { name, duration, percentDone }) => {
     return acc
   }, [])
 
+  const { startDate, durationUnit } = record
+
   return typeof record.id !== 'undefined'
     ? await writeRegistry([
         ...records,
-        ...[{ id, name, duration, percentDone }],
+        ...[
+          {
+            id,
+            name,
+            duration,
+            percentDone,
+            durationUnit,
+            ...(typeof startDate !== 'undefined' ? { startDate } : {}),
+          },
+        ],
       ])
     : false
 }
